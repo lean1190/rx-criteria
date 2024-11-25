@@ -1,0 +1,49 @@
+{
+  "name": "rx-criteria",
+  "version": "1.0.0",
+  "description": "RxJs conditions with ease",
+  "main": "dist/index.js",
+  "files": ["dist"],
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/lean1190/rx-criteria.git"
+  },
+  "keywords": [
+    "rxjs",
+    "criteria",
+    "conditions",
+    "functional",
+    "boolean"
+  ],
+  "author": "Lean Vilas <me@leanvilas.com> (https://leanvilas.com)",
+  "license": "Apache License 2.0",
+  "bugs": {
+    "url": "https://github.com/lean1190/rx-criteria/issues"
+  },
+  "homepage": "https://github.com/lean1190/rx-criteria#readme",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./dist/index.js",
+      "default": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "lint": "tsc",
+    "ci": "npm run build && npm run exports:check && npm run lint && npm run test",
+    "exports:check": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.5"
+  },
+  "peerDependencies": {
+    "rxjs": "^7.x.x"
+  }
+}
