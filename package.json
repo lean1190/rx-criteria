@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "RxJs conditions with ease",
   "main": "dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "repository": {
     "type": "git",
@@ -33,12 +35,15 @@
     "build": "tsup",
     "lint": "tsc",
     "ci": "npm run build && npm run exports:check && npm run lint && npm run test",
+    "release:local": "changeset && changeset version && changeset publish",
     "exports:check": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run ci"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.0",
+    "@changesets/cli": "^2.27.10",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
     "vitest": "^2.1.5"
