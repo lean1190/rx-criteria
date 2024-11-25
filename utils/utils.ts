@@ -3,10 +3,10 @@ import { catchError, lastValueFrom, Observable, of, shareReplay, take, toArray }
 
 /**
  * Returns true if the value is truthy
- * @param {any} value
+ * @param {T} value
  * @returns {boolean}
  */
-export const isTrue = (value: any) => !!value
+export const isTrue = <T>(value: T) => !!value
 
 /**
  * Returns true if every value is true
@@ -30,7 +30,7 @@ export const toAsync = (value: boolean | Observable<boolean>): Observable<boolea
  * @param {number} count
  * @returns {Promise<T[]>}
  */
-export function takeValues<T = any>(observable: Observable<T>, count: number = 1): Promise<T[]> {
+export const takeValues = <T>(observable: Observable<T>, count: number = 1): Promise<T[]> => {
   return lastValueFrom(observable.pipe(take(count), toArray()));
 }
 

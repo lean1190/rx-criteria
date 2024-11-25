@@ -3,7 +3,9 @@ import { of, throwError } from 'rxjs'
 import { debugCriterion, takeValues } from './utils'
 import { combineCriteria, isEveryAsyncCriterionTrue } from '../criteria/composition'
 
-declare const global: any;
+declare const global: {
+  console: { debug: () => void, error: () => void };
+};
 
 describe('utils', () => {
   describe('debugCriterion', () => {
