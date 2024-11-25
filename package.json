@@ -33,8 +33,8 @@
   },
   "scripts": {
     "build": "tsup",
-    "lint": "tsc && npx eslint --fix",
-    "ci": "npm run build && npm run exports:check && npm run lint && npm run test",
+    "lint": "tsc && npx eslint",
+    "lint:fix": "tsc && npx eslint --fix",
     "release:local": "changeset && changeset version && changeset publish",
     "exports:check": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "test": "vitest run",
