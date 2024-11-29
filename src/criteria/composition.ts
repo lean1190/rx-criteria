@@ -1,24 +1,24 @@
 import { combineLatest, map, Observable } from 'rxjs'
-import { defaultTransformFunction, isTrue, toAsync } from '../utils/utils'
+import { defaultTransformFunction, isTrue, toObservable } from '../utils/utils'
 
 import type { AsyncCriteriaCompositionFunction, AsyncCriterion, Criteria, Criterion, TransformFunction } from '../types/types'
 
 /**
  * Combines a set of criteria into one observable
- * @param {Criteria} criteria
- * @returns {Observable<boolean>}
+ * @param {TransformFunction} transformFunction
+ * @returns {Function(criteria: Criteria): Observable<boolean>}
  */
 export const combineCriteria =
   (transformFunction: TransformFunction = defaultTransformFunction): AsyncCriteriaCompositionFunction =>
   (criteria: Criteria): Observable<boolean> =>
-    combineLatest(criteria.map(criterion => toAsync(criterion()))).pipe(map(transformFunction))
+    combineLatest(criteria.map(criterion => toObservable(criterion()))).pipe(map(transformFunction))
 
 /**
  * Returns true if every criterion is true
  * @param {Criteria} criteria
- * @returns {Observable<boolean>}
+ * @returns {Function(): Observable<boolean>}
  */
-export const isEveryAsyncCriterionTrue =
+export const isEveryCriterionTrue =
   (criteria: Criteria): AsyncCriterion =>
   () =>
     combineCriteria(values => values.every(isTrue))(criteria)
@@ -26,9 +26,9 @@ export const isEveryAsyncCriterionTrue =
 /**
  * Returns true if any criterion is true
  * @param {Criteria} criteria
- * @returns {Observable<boolean>}
+ * @returns {Function(): Observable<boolean>}
  */
-export const isSomeAsyncCriterionTrue =
+export const isSomeCriterionTrue =
   (criteria: Criteria): AsyncCriterion =>
   () =>
     combineCriteria(values => values.some(isTrue))(criteria)
@@ -36,9 +36,9 @@ export const isSomeAsyncCriterionTrue =
 /**
  * Returns true if the criterion is false
  * @param {Criterion} criterion
- * @returns {Observable<boolean>}
+ * @returns {Function(): Observable<boolean>}
  */
-export const isNotAsyncCriterion =
+export const isNotCriterion =
   (criterion: Criterion): AsyncCriterion =>
   () =>
-    toAsync(criterion()).pipe(map(value => !value))
+    toObservable(criterion()).pipe(map(value => !value))

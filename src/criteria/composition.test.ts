@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { of, throwError } from 'rxjs'
 import { takeValues } from '../utils/utils'
-import { combineCriteria, isEveryAsyncCriterionTrue, isSomeAsyncCriterionTrue, isNotAsyncCriterion } from './composition'
+import { combineCriteria, isEveryCriterionTrue, isSomeCriterionTrue, isNotCriterion } from './composition'
 import type { Criteria } from '../types/types'
 
 describe('composition async criteria', () => {
@@ -20,9 +20,9 @@ describe('composition async criteria', () => {
 
       const [result] = await takeValues(
         combineCriteria()([
-          isSomeAsyncCriterionTrue([() => of(true), () => of(false), () => of(false)]),
-          isEveryAsyncCriterionTrue([() => of(true), () => of(true), () => of(true)]),
-          isSomeAsyncCriterionTrue([isEveryAsyncCriterionTrue([() => of(true)]), () => of(false), () => of(false)])
+          isSomeCriterionTrue([() => of(true), () => of(false), () => of(false)]),
+          isEveryCriterionTrue([() => of(true), () => of(true), () => of(true)]),
+          isSomeCriterionTrue([isEveryCriterionTrue([() => of(true)]), () => of(false), () => of(false)])
         ])
       )
 
@@ -34,9 +34,9 @@ describe('composition async criteria', () => {
 
       const [result] = await takeValues(
         combineCriteria()([
-          isSomeAsyncCriterionTrue([() => of(true), () => of(false), () => false]),
-          isEveryAsyncCriterionTrue([() => true, () => of(true), () => true]),
-          isSomeAsyncCriterionTrue([isEveryAsyncCriterionTrue([() => of(true)]), () => false, () => false])
+          isSomeCriterionTrue([() => of(true), () => of(false), () => false]),
+          isEveryCriterionTrue([() => true, () => of(true), () => true]),
+          isSomeCriterionTrue([isEveryCriterionTrue([() => of(true)]), () => false, () => false])
         ])
       )
 
@@ -47,7 +47,7 @@ describe('composition async criteria', () => {
       const expectedResult = false
 
       const [result] = await takeValues(
-        combineCriteria()([() => true, isEveryAsyncCriterionTrue([() => false, () => true])])
+        combineCriteria()([() => true, isEveryCriterionTrue([() => false, () => true])])
       )
 
       expect(result).toStrictEqual(expectedResult)
@@ -64,17 +64,17 @@ describe('composition async criteria', () => {
     })
   })
 
-  describe('isEveryAsyncCriterionTrue', () => {
+  describe('isEveryCriterionTrue', () => {
     it('should return true if every criterion is true', async () => {
       const expectedResult = true
-      const [result] = await takeValues(isEveryAsyncCriterionTrue([() => of(true), () => of(true), () => of(true)])())
+      const [result] = await takeValues(isEveryCriterionTrue([() => of(true), () => of(true), () => of(true)])())
 
       expect(result).toStrictEqual(expectedResult)
     })
 
     it('should return false if one criterion is false', async () => {
       const expectedResult = false
-      const [result] = await takeValues(isEveryAsyncCriterionTrue([() => of(true), () => of(false), () => of(true)])())
+      const [result] = await takeValues(isEveryCriterionTrue([() => of(true), () => of(false), () => of(true)])())
 
       expect(result).toStrictEqual(expectedResult)
     })
@@ -83,31 +83,31 @@ describe('composition async criteria', () => {
       const expectedError = new Error('Failed')
 
       try {
-        await takeValues(isEveryAsyncCriterionTrue([...criteria, () => throwError(() => expectedError)])())
+        await takeValues(isEveryCriterionTrue([...criteria, () => throwError(() => expectedError)])())
       } catch (error) {
         expect(error).toStrictEqual(expectedError)
       }
     })
   })
 
-  describe('isSomeAsyncCriterionTrue', () => {
+  describe('isSomeCriterionTrue', () => {
     it('should return true if every criterion is true', async () => {
       const expectedResult = true
-      const [result] = await takeValues(isSomeAsyncCriterionTrue([() => of(true), () => of(true), () => of(true)])())
+      const [result] = await takeValues(isSomeCriterionTrue([() => of(true), () => of(true), () => of(true)])())
 
       expect(result).toStrictEqual(expectedResult)
     })
 
     it('should return true if one criterion is true', async () => {
       const expectedResult = true
-      const [result] = await takeValues(isSomeAsyncCriterionTrue([() => of(true), () => of(false), () => of(false)])())
+      const [result] = await takeValues(isSomeCriterionTrue([() => of(true), () => of(false), () => of(false)])())
 
       expect(result).toStrictEqual(expectedResult)
     })
 
     it('should return false if every criterion is false', async () => {
       const expectedResult = false
-      const [result] = await takeValues(isSomeAsyncCriterionTrue([() => of(false), () => of(false), () => of(false)])())
+      const [result] = await takeValues(isSomeCriterionTrue([() => of(false), () => of(false), () => of(false)])())
 
       expect(result).toStrictEqual(expectedResult)
     })
@@ -116,38 +116,38 @@ describe('composition async criteria', () => {
       const expectedError = new Error('Failed')
 
       try {
-        await takeValues(isSomeAsyncCriterionTrue([...criteria, () => throwError(() => expectedError)])())
+        await takeValues(isSomeCriterionTrue([...criteria, () => throwError(() => expectedError)])())
       } catch (error) {
         expect(error).toStrictEqual(expectedError)
       }
     })
   })
 
-  describe('isNotAsyncCriterion', () => {
+  describe('isNotCriterion', () => {
     it('should return true if the async criterion is false', async () => {
       const expectedResult = true
-      const [result] = await takeValues(isNotAsyncCriterion(() => of(false))())
+      const [result] = await takeValues(isNotCriterion(() => of(false))())
 
       expect(result).toStrictEqual(expectedResult)
     })
 
     it('should return false if the async criterion is true', async () => {
       const expectedResult = false
-      const [result] = await takeValues(isNotAsyncCriterion(() => of(true))())
+      const [result] = await takeValues(isNotCriterion(() => of(true))())
 
       expect(result).toStrictEqual(expectedResult)
     })
 
     it('should return true if the sync criterion is false', async () => {
       const expectedResult = true
-      const [result] = await takeValues(isNotAsyncCriterion(() => false)())
+      const [result] = await takeValues(isNotCriterion(() => false)())
 
       expect(result).toStrictEqual(expectedResult)
     })
 
     it('should return false if the sync criterion is true', async () => {
       const expectedResult = false
-      const [result] = await takeValues(isNotAsyncCriterion(() => true)())
+      const [result] = await takeValues(isNotCriterion(() => true)())
 
       expect(result).toStrictEqual(expectedResult)
     })
@@ -156,7 +156,7 @@ describe('composition async criteria', () => {
       const expectedError = new Error('Failed')
 
       try {
-        await takeValues(isNotAsyncCriterion(() => throwError(() => expectedError))())
+        await takeValues(isNotCriterion(() => throwError(() => expectedError))())
       } catch (error) {
         expect(error).toStrictEqual(expectedError)
       }

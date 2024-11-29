@@ -32,6 +32,7 @@
     }
   },
   "scripts": {
+    "ci": "npm run test && npm run lint && npm run exports:check && npm run build",
     "build": "tsup",
     "lint": "tsc && npx eslint",
     "lint:fix": "tsc && npx eslint --fix",

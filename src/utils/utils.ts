@@ -21,11 +21,11 @@ export const defaultTransformFunction: TransformFunction = values => values.ever
  * @param {boolean | Observable<boolean>} value
  * @returns {Observable<boolean>}
  */
-export const toAsync = (value: boolean | Observable<boolean>): Observable<boolean> =>
+export const toObservable = (value: boolean | Observable<boolean>): Observable<boolean> =>
   value instanceof Observable ? value : of(value)
 
 /**
- * 
+ * Returns a Promise with a determined amount of emissions from an Observable
  * @param {Observable<T>} observable 
  * @param {number} count
  * @returns {Promise<T[]>}
@@ -37,12 +37,12 @@ export const takeValues = <T>(observable: Observable<T>, count: number = 1): Pro
 /**
  * Subscribes to the criterion and logs the value
  * @param {string} name
- * @returns {AsyncCriterion | SyncCriterion}
+ * @returns {Function(criterion: AsyncCriterion | SyncCriterion): AsyncCriterion | SyncCriterion}
  */
 export const debugCriterion =
   (name: string) =>
   (criterion: AsyncCriterion | SyncCriterion): AsyncCriterion | SyncCriterion => {
-    toAsync(criterion())
+    toObservable(criterion())
       .pipe(
         catchError((error, caught) => {
           console.error(name, error)

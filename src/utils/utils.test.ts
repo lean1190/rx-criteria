@@ -1,7 +1,7 @@
 import { describe, beforeEach, it, vitest, type MockInstance, expect } from 'vitest';
 import { of, throwError } from 'rxjs'
 import { debugCriterion, takeValues } from './utils'
-import { combineCriteria, isEveryAsyncCriterionTrue } from '../criteria/composition'
+import { combineCriteria, isEveryCriterionTrue } from '../criteria/composition'
 
 declare const global: {
   console: { debug: () => void, error: () => void };
@@ -24,7 +24,7 @@ describe('utils', () => {
         combineCriteria()([
           debugCriterion('Async')(() => of(true)),
           debugCriterion('Sync')(() => false),
-          debugCriterion('Is every')(isEveryAsyncCriterionTrue([debugCriterion('In every item')(() => of(true))]))
+          debugCriterion('Is every')(isEveryCriterionTrue([debugCriterion('In every item')(() => of(true))]))
         ])
       )
 
@@ -43,7 +43,7 @@ describe('utils', () => {
           combineCriteria()([
             debugCriterion('Async')(() => throwError(() => expectedError)),
             debugCriterion('Sync')(() => false),
-            debugCriterion('Is every')(isEveryAsyncCriterionTrue([debugCriterion('In every item')(() => of(true))]))
+            debugCriterion('Is every')(isEveryCriterionTrue([debugCriterion('In every item')(() => of(true))]))
           ])
         )
       } catch (error) {
