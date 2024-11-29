@@ -1,4 +1,4 @@
-import type { AsyncCriterion, TransformFunction, SyncCriterion } from '../types/types'
+import type { TransformFunction, Criterion } from '../types/types'
 import { catchError, lastValueFrom, Observable, of, shareReplay, take, toArray } from 'rxjs'
 
 /**
@@ -26,7 +26,7 @@ export const toObservable = (value: boolean | Observable<boolean>): Observable<b
 
 /**
  * Returns a Promise with a determined amount of emissions from an Observable
- * @param {Observable<T>} observable 
+ * @param {Observable<T>} observable
  * @param {number} count
  * @returns {Promise<T[]>}
  */
@@ -37,11 +37,11 @@ export const takeValues = <T>(observable: Observable<T>, count: number = 1): Pro
 /**
  * Subscribes to the criterion and logs the value
  * @param {string} name
- * @returns {Function(criterion: AsyncCriterion | SyncCriterion): AsyncCriterion | SyncCriterion}
+ * @returns {Function(criterion: Criterion): Criterion}
  */
 export const debugCriterion =
   (name: string) =>
-  (criterion: AsyncCriterion | SyncCriterion): AsyncCriterion | SyncCriterion => {
+  (criterion: Criterion): Criterion => {
     toObservable(criterion())
       .pipe(
         catchError((error, caught) => {
