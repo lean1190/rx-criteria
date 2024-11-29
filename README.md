@@ -1,6 +1,9 @@
-# Rx Criteria
+# [Rx Criteria](https://www.npmjs.com/package/rx-criteria)
 
 RxJs boolean conditions with ease.
+```
+npm i rx-criteria
+```
 
 ## The idea
 When working with configurations, Observables composition can be messy.
