@@ -1,5 +1,11 @@
 # rx-criteria
 
+## 1.0.1
+
+### Patch Changes
+
+- 6edf4f7: Simplify typing
+
 ## 1.0.0
 
 ### Major Changes
