@@ -32,7 +32,7 @@
     }
   },
   "scripts": {
-    "ci": "npm run test && npm run lint && npm run exports:check && npm run build",
+    "ci": "rimraf dist && npm run test && npm run lint && npm run exports:check && npm run build",
     "build": "tsup",
     "lint": "tsc && npx eslint",
     "lint:fix": "tsc && npx eslint --fix",
@@ -48,6 +48,7 @@
     "@eslint/js": "^9.15.0",
     "eslint": "^9.15.0",
     "globals": "^15.12.0",
+    "rimraf": "^6.0.1",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.16.0",
