@@ -8,7 +8,7 @@ npm i rx-criteria
 ## The idea
 When working with configurations, Observables composition can be messy.
 
-This library aims to provide a simple and verbose interface to compose asynchronous boolean conditions using Observables.
+This library aims to provide a simple and semantic interface to compose asynchronous boolean conditions using Observables.
 
 ### The Criterion
 A Criterion is the fundamental piece of this library, and it is a function with no arguments that returns a boolean, or a boolean Observable. Simple.
