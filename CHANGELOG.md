@@ -1,5 +1,11 @@
 # rx-criteria
 
+## 1.0.2
+
+### Patch Changes
+
+- 38bcf43: Remove renamed export. toAsync is now toObservable
+
 ## 1.0.1
 
 ### Patch Changes
