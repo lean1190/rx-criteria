@@ -1,12 +1,13 @@
-import { delay, Observable, of, startWith } from 'rxjs'
-import { isEveryCriterionTrue, isNotCriterion, isSomeCriterionTrue, type Criteria } from '../../src'
+import { delay, Observable, of, startWith } from 'rxjs';
 
-export type FeatureFlags = { [key in Feature]: Criteria }
+import { type Criteria, isEveryCriterionTrue, isNotCriterion, isSomeCriterionTrue } from '../../src';
 
 // 1. Add your new feature here
 export enum Feature {
     ExampleFeature = 'exampleFeature'
 }
+
+export type FeatureFlags = { [key in Feature]: Criteria }
 
 // 2. Add the criteria for the new feature
 const featureFlags: FeatureFlags = {
@@ -24,7 +25,7 @@ const featureFlags: FeatureFlags = {
             ])
         ])
     ]
-}
+};
 
 // 3. Use the function to evaluate if the feature is enabled
-export const isFeatureEnabled = (feature: Feature): Observable<boolean> => isEveryCriterionTrue(featureFlags[feature])()
+export const isFeatureEnabled = (feature: Feature): Observable<boolean> => isEveryCriterionTrue(featureFlags[feature])();
