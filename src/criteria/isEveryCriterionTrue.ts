@@ -3,7 +3,7 @@ import { isTrue } from '../utils/isTrue';
 import { combineCriteria } from './combineCriteria';
 
 /**
- * Returns an Observable<true> if every criterion is true
+ * Returns true if every criterion is true
  * @param {Criteria} criteria
  * @returns {Function(): Observable<boolean>}
  */

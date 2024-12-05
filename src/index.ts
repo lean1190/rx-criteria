@@ -1,6 +1,8 @@
 export { combineCriteria } from './criteria/combineCriteria';
+export { isEveryCriterionFalse } from './criteria/isEveryCriterionFalse';
 export { isEveryCriterionTrue } from './criteria/isEveryCriterionTrue';
 export { isNotCriterion } from './criteria/isNotCriterion';
+export { isSomeCriterionFalse } from './criteria/isSomeCriterionFalse';
 export { isSomeCriterionTrue } from './criteria/isSomeCriterionTrue';
 export * from './types/types';
 export { debugCriterion } from './utils/debugCriterion';
