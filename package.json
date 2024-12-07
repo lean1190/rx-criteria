@@ -36,7 +36,7 @@
     "build": "tsup",
     "lint": "npx eslint",
     "lint:fix": "npx eslint --fix",
-    "release:local": "changeset && changeset version && changeset publish",
+    "release:local": "changeset && changeset version && changeset publish && git push --follow-tags",
     "exports:check": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "test": "vitest run",
     "test:watch": "vitest",
