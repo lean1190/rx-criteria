@@ -32,15 +32,17 @@
     }
   },
   "scripts": {
-    "ci": "rimraf dist && npm run test && npm run lint && npm run exports:check && npm run build",
+    "ci": "rimraf dist && npm run test && npm run types:check && npm run lint && npm run exports:check && npm run build",
     "build": "tsup",
-    "lint": "tsc && npx eslint",
-    "lint:fix": "tsc && npx eslint --fix",
+    "lint": "npx eslint",
+    "lint:fix": "npx eslint --fix",
     "release:local": "changeset && changeset version && changeset publish",
     "exports:check": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublishOnly": "npm run ci"
+    "types:check": "npx tsc --noEmit",
+    "prepublishOnly": "npm run ci",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.0",
@@ -49,6 +51,8 @@
     "eslint": "^9.15.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^15.12.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
     "rimraf": "^6.0.1",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
