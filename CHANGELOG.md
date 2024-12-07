@@ -1,5 +1,14 @@
 # rx-criteria
 
+## 1.1.0
+
+### Minor Changes
+
+- cbdf045: Add Criteria to check for false values
+
+  - Add isSomeCriterionFalse
+  - Add isEveryCriterionFalse
+
 ## 1.0.2
 
 ### Patch Changes
